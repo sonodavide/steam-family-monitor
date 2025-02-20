@@ -143,7 +143,6 @@ class DbHelper:
             ''', (userId,))
             
             # Convert to set of appids for faster lookup
-            existing_appids = {row[0] for row in cursor.fetchall()}
-            
+            existing_appids = [row[0] for row in cursor.fetchall()]
             # Return only games not in database
             return [game for game in current_games if game.appid not in existing_appids]
