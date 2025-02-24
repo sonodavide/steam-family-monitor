@@ -1,14 +1,14 @@
-from DbHelper import DbHelper
-from SteamWebApi import SteamWebApi
-from UpdateFetcher import UpdateFetcher
-from ParsedUserResult import ParsedUserResult
-from Game import Game
+from src.services.database.DbHelper import DbHelper
+from src.services.fetchers.SteamWebApi import SteamWebApi
+from src.services.fetchers.UpdateFetcher import UpdateFetcher
+from src.models.ParsedUserResult import ParsedUserResult
+from src.models.Game import Game
 import yaml
 class SteamWebApiFetcher(UpdateFetcher):
     def __init__(self, db: DbHelper):
         super().__init__()
         self.steamWebApi = SteamWebApi()
-        with open('../config.yaml', 'r') as file:
+        with open('config.yaml', 'r') as file:
             config = yaml.safe_load(file)
         self.user_ids = config['SteamProfilesLinks']
         self.user_ids = self._parseUserIds(self.user_ids)

@@ -1,4 +1,4 @@
-from Game import Game
+from src.models.Game import Game  # Changed from models.Game to src.models.Game
 
 
 class ParsedUserResult:
