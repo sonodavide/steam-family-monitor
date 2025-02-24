@@ -13,9 +13,18 @@ class SteamWebApiFetcher(UpdateFetcher):
         self.user_ids = config['SteamProfilesLinks']
         self.user_ids = self._parseUserIds(self.user_ids)
         self.dbHelper = db
+        self._usersInitializer(self.user_ids)
+        
+    def _usersInitializer(self, userIds : list[str]):
+        for userId in userIds:
+            if not self.dbHelper.user_exists(userId):
+                jsonResponse = self.steamWebApi.getOwnedGames(userId)["response"]["games"]
+                fetchedGames = list()
+                for game in jsonResponse:
+                    fetchedGames.append(Game(str(game['appid']), game['name']))
+                self.dbHelper.update_user_games(userId, fetchedGames)
+            
 
-        
-        
     def fetchUpdates(self):
         parsedUsersResults = []
         for userId in self.user_ids:

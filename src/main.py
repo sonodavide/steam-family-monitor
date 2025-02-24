@@ -6,11 +6,14 @@ import requests
 from pprint import pprint
 from TelegramNotificationSender import TelegramNotificationSender
 
+steamWebApiFetcher = SteamWebApiFetcher(DbHelper())
+telegramNotificationSender = TelegramNotificationSender()
 
-results = SteamWebApiFetcher(DbHelper()).fetchUpdates()
-#TelegramNotificationSender().send_notification(results)
-TelegramNotificationSender().send_notification(results)
-    
+while(True):
+
+    results = steamWebApiFetcher.fetchUpdates()
+    telegramNotificationSender.send_notification(results)
+    time.sleep(60)
 
 
 
