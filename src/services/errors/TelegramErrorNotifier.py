@@ -1,6 +1,7 @@
+from src.services.errors.BaseErrorNotifier import BaseErrorNotifier
 from src.services.api.TelegramApi import TelegramApi
 import yaml
-class TelegramErrorNotifier:
+class TelegramErrorNotifier(BaseErrorNotifier):
     def __init__(self):
         with open('config.yaml', 'r') as file:
             config = yaml.safe_load(file)
