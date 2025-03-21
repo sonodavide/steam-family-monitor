@@ -6,3 +6,11 @@ class Game:
 
     def getStoreLink(self):
         return f"{self.STEAM_STORE_URL}/{self.appid}/"
+    
+    def __eq__(self, other):
+        if not isinstance(other, Game):
+            return False
+        return self.appid == other.appid
+
+    def __hash__(self):
+        return hash(self.appid)

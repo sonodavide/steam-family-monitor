@@ -1,10 +1,11 @@
+from src.services.errors.ErrorNotifierManager import ErrorNotifierManager
 from src.services.database.DbHelper import DbHelper
-from src.services.fetchers.SteamWebApi import SteamWebApi
-from src.services.fetchers.UpdateFetcher import UpdateFetcher
+from src.services.api.SteamWebApi import SteamWebApi
+from src.services.fetchers.BaseFetcher import BaseFetcher
 from src.models.ParsedUserResult import ParsedUserResult
 from src.models.Game import Game
 import yaml
-class SteamWebApiFetcher(UpdateFetcher):
+class SteamWebApiFetcher(BaseFetcher):
     def __init__(self, db: DbHelper):
         super().__init__()
         self.steamWebApi = SteamWebApi()
@@ -18,22 +19,28 @@ class SteamWebApiFetcher(UpdateFetcher):
     def _usersInitializer(self, userIds : list[str]):
         for userId in userIds:
             if not self.dbHelper.user_exists(userId):
-                jsonResponse = self.steamWebApi.getOwnedGames(userId)["response"]["games"]
-                fetchedGames = list()
+                jsonResponse = self.steamWebApi.getOwnedGames(userId).get("response").get("games")
+                if jsonResponse == None:
+                    ErrorNotifierManager.notify(f"Failed to fetch games for user {userId}")
+                    continue
+                fetchedGames = set()
                 for game in jsonResponse:
-                    fetchedGames.append(Game(str(game['appid']), game['name']))
+                    fetchedGames.add(Game(str(game['appid']), game['name']))
                 self.dbHelper.update_user_games(userId, fetchedGames)
             
 
-    def fetchUpdates(self):
+    def fetch(self):
         parsedUsersResults = []
         for userId in self.user_ids:
-            jsonResponse = self.steamWebApi.getOwnedGames(userId)["response"]["games"]
-            fetchedGames = list()
+            jsonResponse = self.steamWebApi.getOwnedGames(userId).get("response").get("games")
+            if jsonResponse == None:
+                ErrorNotifierManager.notify(f"Failed to fetch games for user {userId}")
+                continue
+            fetchedGames = set()
             parsedUserResult = ParsedUserResult(userId)
             parsedUserResult.set_username(self.steamWebApi.getUserUsername(userId))
             for game in jsonResponse:
-                fetchedGames.append(Game(str(game['appid']), game['name'])) 
+                fetchedGames.add(Game(str(game['appid']), game['name'])) 
             
             newGames = self.dbHelper.get_new_games(userId, fetchedGames)
             

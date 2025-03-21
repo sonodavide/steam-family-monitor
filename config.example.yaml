@@ -1,12 +1,28 @@
+# Steam family members accounts
 SteamProfilesLinks:
-  - https://steamcommunity.com/id/Example/
-  #- insert_steam_profile_link_here
-  #- insert_steam_profile_link_here
-SteamWebApi:
-  apiKey: insert_your_api_key_here
-TelegramNotification:
-  botToken: insert_your_bot_token_here
-  chatIds:
-    - insert_your_chat_id_here
-    #- insert_your_chat_id_here
-    #- insert_your_chat_id_here
+  - https://steamcommunity.com/id/Example1/
+  - https://steamcommunity.com/id/Example2/
+  - https://steamcommunity.com/profiles/12345678901234567/
+  - https://steamcommunity.com/profiles/76561198012345678/
+
+
+Fetchers:
+  SteamWebApi:
+    enabled: true
+    apiKey: YOUR_STEAM_API_KEY_HERE
+
+Notifiers:
+  Telegram:
+    enabled: true
+    botToken: 1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+    chatIds:
+      - 123456789
+      #- -1001234567890
+
+#Error and status messages will be sent to the same chatIds as the ApplicationNotifier
+ApplicationNotifier:
+  Telegram:
+    enabled: true
+    botToken: 1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890
+    chatIds:
+      - 123456789
