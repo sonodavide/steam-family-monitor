@@ -31,27 +31,26 @@ class TelegramNotificationSender(NotificationSender):
         return """
 
     def send_notification(self, parsedUsersResults : list[ParsedUserResult]):
-        
         for user in parsedUsersResults:
             if len(user.games) == 0:
                 continue
             message = ""
-            
+            messageFooter = f'\n<b>~ <a href="{user.getProfileLink()}">{user.username}</a></b>'
             media = []
             for i, game in enumerate(user.games):
-                if len(message) + len(game.name) > 2023:
-                    self._sendMediaGroup(media, message)
+                if len(message) + len(game.name) + len(messageFooter)> 2023:
+                    self._sendMediaGroup(media, message+messageFooter)
                     media = []
                     message = ""
                 media_item = {
                     "type": "photo",
-                    "media": game.link,
+                    "media": game.getStoreLink(),
                 }
                 media.append(media_item)
-                message += f'<a href="{game.link}">{game.name}</a>\n'
+                message += f'<b>• <a href="{game.getStoreLink()}">{game.name}</a></b>\n'
 
                 if i == len(user.games) - 1 or len(media) == 10:
-                    self._sendMediaGroup(media, message)
+                    self._sendMediaGroup(media, message+messageFooter)
                     media = []
                     message = ""
         return 

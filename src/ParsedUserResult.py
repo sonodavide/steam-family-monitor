@@ -16,4 +16,7 @@ class ParsedUserResult:
         except Exception as e:
             print(f"Error: {e}")
             username = self.user_id
+
+    def getProfileLink(self):
+        return f"https://steamcommunity.com/id/{self.user_id}"
         
