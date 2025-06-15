@@ -15,7 +15,7 @@ while(True):
     results = steamWebApiFetcher.fetchUpdates()
     telegramNotificationSender.send_notification(results)
     print("Latest update:", time.strftime("%d-%m-%Y %H:%M"))
-    time.sleep(60)
+    time.sleep(600)
 
 
 
