@@ -146,3 +146,16 @@ class DbHelper:
             existing_appids = [row[0] for row in cursor.fetchall()]
             # Return only games not in database
             return [game for game in current_games if game.appid not in existing_appids]
+        
+    def user_exists(self, userId: str) -> bool:
+        """
+        Check if a user exists in the database
+        Args:
+            userId: Steam user ID
+        Returns:
+            bool: True if user exists, False otherwise
+        """
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute('SELECT EXISTS(SELECT 1 FROM users WHERE userId = ?)', (userId,))
+            return cursor.fetchone()[0] == 1
