@@ -18,5 +18,5 @@ class ParsedUserResult:
             username = self.user_id
 
     def getProfileLink(self):
-        return f"https://steamcommunity.com/id/{self.user_id}"
+        return f"https://steamcommunity.com/profiles/{self.user_id}"
         
