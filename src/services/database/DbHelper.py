@@ -1,10 +1,10 @@
 import sqlite3
 from typing import List
 
-from Game import Game
+from src.models.Game import Game  
 
 class DbHelper:
-    def __init__(self, db_path: str = "steamWebApiDB.db"):
+    def __init__(self, db_path: str = "src/data/steamWebApiDB.db"):
         self.db_path = db_path
         self._init_db()
 

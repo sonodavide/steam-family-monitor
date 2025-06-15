@@ -3,7 +3,7 @@ import requests
 from pprint import pprint
 class SteamWebApi:
     def __init__(self):
-        with open('../config.yaml', 'r') as file:
+        with open('config.yaml', 'r') as file:
             config = yaml.safe_load(file)
         
         self.base_url = "https://api.steampowered.com"
