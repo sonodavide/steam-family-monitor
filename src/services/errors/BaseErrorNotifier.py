@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-class NotificationSender(ABC):
+class BaseErrorNotifier(ABC):
     """Abstract class for sending notifications"""
     
     @abstractmethod
-    def send_notification(self) -> bool:
+    def notify_error(self) -> bool:
         pass

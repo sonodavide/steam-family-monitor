@@ -4,18 +4,14 @@ from src.models.Game import Game  # Changed from models.Game to src.models.Game
 class ParsedUserResult:
     def __init__(self, user_id):
         self.user_id = user_id
-        self.games = []
+        self.games = set()
         self.username = ""
 
     def add_game(self, game : Game):
-        self.games.append(game)
+        self.games.add(game)
     
     def set_username(self, username):
-        try:
             self.username = username
-        except Exception as e:
-            print(f"Error: {e}")
-            username = self.user_id
 
     def getProfileLink(self):
         return f"https://steamcommunity.com/profiles/{self.user_id}"
