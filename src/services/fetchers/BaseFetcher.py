@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-class UpdateFetcher(ABC):
+class BaseFetcher(ABC):
     """Abstract class for fetching updates"""
     
     @abstractmethod
-    def fetchUpdates(self) -> list['ParsedUserResult']:
+    def fetch(self) -> list['ParsedUserResult']:
         pass
