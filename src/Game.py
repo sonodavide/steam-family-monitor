@@ -1,6 +1,5 @@
 class Game:
-    def __init__(self, appid, link, nome, img):
+    def __init__(self, appid, name):
         self.appid = appid
-        self.link = link
-        self.nome = nome
-        self.img = img
+        self.link = f"https://store.steampowered.com/app/{appid}"
+        self.name = name
