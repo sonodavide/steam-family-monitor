@@ -5,14 +5,14 @@ from ParsedUserResult import ParsedUserResult
 from Game import Game
 import yaml
 class SteamWebApiFetcher(UpdateFetcher):
-    def __init__(self):
+    def __init__(self, db: DbHelper):
         super().__init__()
         self.steamWebApi = SteamWebApi()
         with open('../config.yaml', 'r') as file:
             config = yaml.safe_load(file)
         self.user_ids = config['SteamProfilesLinks']
         self.user_ids = self._parseUserIds(self.user_ids)
-        self.dbHelper = DbHelper()
+        self.dbHelper = db
 
         
         
