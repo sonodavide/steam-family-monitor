@@ -1,2 +1,12 @@
+SteamProfilesLinks:
+  - https://steamcommunity.com/id/Example/
+  #- insert_steam_profile_link_here
+  #- insert_steam_profile_link_here
 SteamWebApi:
   apiKey: insert_your_api_key_here
+TelegramNotification:
+  botToken: insert_your_bot_token_here
+  chatIds:
+    - insert_your_chat_id_here
+    #- insert_your_chat_id_here
+    #- insert_your_chat_id_here
