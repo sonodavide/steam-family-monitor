@@ -1,11 +1,11 @@
-from NotificationSender import NotificationSender 
+from src.services.notifiers.NotificationSender import NotificationSender
+from src.models.ParsedUserResult import ParsedUserResult
 import requests
 import yaml
 
-from ParsedUserResult import ParsedUserResult
 class TelegramNotificationSender(NotificationSender):
     def __init__(self):
-        with open('../config.yaml', 'r') as file:
+        with open('config.yaml', 'r') as file:
             config = yaml.safe_load(file)
         self.chatIds=config["TelegramNotification"]["chatIds"]
         self.TOKEN=config["TelegramNotification"]["botToken"]
